@@ -43,7 +43,7 @@ export const App = () => {
       console.log("start");
 
       const data: IssNow = await (
-        await fetch("http://api.open-notify.org/iss-now.json/")
+        await fetch("http://api.open-notify.org/iss-now.json")
       ).json();
 
       if (data) {
