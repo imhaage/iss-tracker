@@ -13,17 +13,19 @@ interface Position {
 }
 
 interface IssNow {
-  message: string;
-  timestamp: number;
-  iss_position: {
-    longitude: string;
-    latitude: string;
-  };
-}
-
-interface IssNowExtended extends IssNow {
-  longitude: number;
+  name: string;
+  id: number;
   latitude: number;
+  longitude: number;
+  altitude: number;
+  velocity: number;
+  visibility: string;
+  footprint: number;
+  timestamp: number;
+  daynum: number;
+  solar_lat: number;
+  solar_lon: number;
+  units: string;
 }
 
 export const App = () => {
@@ -33,7 +35,7 @@ export const App = () => {
     zoom: 1,
   });
 
-  const [issNow, setIssNow] = useState<IssNowExtended>();
+  const [issNow, setIssNow] = useState<IssNow>();
   const [positions, setPositions] = useState<Position[]>([]);
 
   useEffect(() => {
@@ -43,21 +45,17 @@ export const App = () => {
       console.log("start");
 
       const data: IssNow = await (
-        await fetch("http://api.open-notify.org/iss-now.json")
+        await fetch("https://api.wheretheiss.at/v1/satellites/25544")
       ).json();
 
       if (data) {
-        setIssNow({
-          ...data,
-          longitude: +data.iss_position?.longitude,
-          latitude: +data.iss_position?.latitude,
-        });
+        setIssNow(data);
 
         setPositions((prev) => [
           ...prev,
           {
-            longitude: +data.iss_position?.longitude,
-            latitude: +data.iss_position?.latitude,
+            longitude: data.longitude,
+            latitude: data.latitude,
             timestamp: data.timestamp,
           },
         ]);
