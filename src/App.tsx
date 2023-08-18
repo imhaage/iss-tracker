@@ -84,7 +84,7 @@ export const App = () => {
       radiusMinPixels: 1,
       lineWidthMinPixels: 1,
       getPosition: ({ longitude, latitude }) => [longitude, latitude],
-      getFillColor: [255, 255, 255],
+      getFillColor: [50, 180, 255],
     }),
     new IconLayer({
       id: "IconLayer",
